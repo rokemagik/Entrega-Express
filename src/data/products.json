@@ -1,0 +1,13 @@
+[
+  {
+    "id": 1,
+    "title": "Teclado",
+    "description": "Mecánico",
+    "code": "T01",
+    "price": 20000,
+    "status": true,
+    "stock": 15,
+    "category": "perifericos",
+    "thumbnails": []
+  }
+]

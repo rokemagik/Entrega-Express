@@ -1,0 +1,56 @@
+const { Router } = require("express");
+const ProductManager = require("../managers/ProductManager");
+
+const router = Router();
+const manager = new ProductManager();
+
+// GET todos los productos
+router.get("/", async (req, res) => {
+  const products = await manager.getProducts();
+  res.json(products);
+});
+
+// GET producto por id
+router.get("/:pid", async (req, res) => {
+  const id = parseInt(req.params.pid);
+
+  const product = await manager.getProductById(id);
+
+  if (!product) {
+    return res.status(404).json({ error: "Producto no encontrado" });
+  }
+
+  res.json(product);
+});
+
+// POST crear producto
+router.post("/", async (req, res) => {
+  const product = req.body;
+  const newProduct = await manager.addProduct(product);
+  res.status(201).json(newProduct);
+});
+
+router.put("/:pid", async (req, res) => {
+  const id = parseInt(req.params.pid);
+  const updatedProduct = await manager.updateProduct(id, req.body);
+
+  if (!updatedProduct) {
+    return res.status(404).json({ error: "Producto no encontrado" });
+  }
+
+  res.json(updatedProduct);
+});
+
+router.delete("/:pid", async (req, res) => {
+  const id = parseInt(req.params.pid);
+
+  const deleted = await manager.deleteProduct(id);
+
+  if (!deleted) {
+    return res.status(404).json({ error: "Producto no encontrado" });
+  }
+
+  res.json({ message: "Producto eliminado" });
+});
+
+module.exports = router;

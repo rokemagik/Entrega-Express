@@ -10,7 +10,7 @@ class CartManager {
       const data = await fs.readFile(this.path, "utf-8");
       return JSON.parse(data);
     } catch (error) {
-      return []; // si el archivo no existe devuelve array vacío
+      return [];
     }
   }
 

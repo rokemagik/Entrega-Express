@@ -43,7 +43,7 @@ class ProductManager {
     products[index] = {
       ...products[index],
       ...updatedFields,
-      id: products[index].id // evita cambiar el id
+      id: products[index].id
     };
 
     await fs.writeFile(this.path, JSON.stringify(products, null, 2));

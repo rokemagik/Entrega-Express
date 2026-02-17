@@ -4,13 +4,11 @@ const ProductManager = require("../managers/ProductManager");
 const router = Router();
 const manager = new ProductManager();
 
-// GET todos los productos
 router.get("/", async (req, res) => {
   const products = await manager.getProducts();
   res.json(products);
 });
 
-// GET producto por id
 router.get("/:pid", async (req, res) => {
   const id = parseInt(req.params.pid);
 
@@ -23,7 +21,6 @@ router.get("/:pid", async (req, res) => {
   res.json(product);
 });
 
-// POST crear producto
 router.post("/", async (req, res) => {
   const product = req.body;
   const newProduct = await manager.addProduct(product);

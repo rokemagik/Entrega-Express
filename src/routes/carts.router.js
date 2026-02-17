@@ -34,7 +34,6 @@ router.post("/:cid/product/:pid", async (req, res) => {
   try {
     const { cid, pid } = req.params;
 
-    // 🔥 VALIDACIÓN NUEVA
     const product = await productManager.getProductById(parseInt(pid));
 
     if (!product) {

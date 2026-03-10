@@ -51,16 +51,17 @@ class ProductManager {
     return products[index];
   }
 
-  async deleteProduct(id) {
-    const products = await this.getProducts();
+  async deleteProduct(pid) {
+    const products = await this.getProducts()
 
-    const newProducts = products.filter(p => p.id !== id);
+    const newProducts = products.filter(p => p.id !== Number(pid))
 
-    if (products.length === newProducts.length) return false;
+    await fs.writeFile(
+        this.path,
+        JSON.stringify(newProducts, null, 2)
+    )
 
-    await fs.writeFile(this.path, JSON.stringify(newProducts, null, 2));
-
-    return true;
+    return { message: "Producto eliminado" }
   }
 }
 

@@ -5,8 +5,17 @@ const router = Router();
 const manager = new ProductManager();
 
 router.get("/", async (req, res) => {
-  const products = await manager.getProducts();
-  res.json(products);
+  try {
+
+    const products = await manager.getProducts()
+
+    res.json(products)
+
+  } catch (error){
+
+    res.status(500).json({error:"Error al obtener productos"})
+
+  }
 });
 
 router.get("/:pid", async (req, res) => {
@@ -22,9 +31,25 @@ router.get("/:pid", async (req, res) => {
 });
 
 router.post("/", async (req, res) => {
-  const product = req.body;
-  const newProduct = await manager.addProduct(product);
-  res.status(201).json(newProduct);
+  try {
+
+    const product = req.body
+
+    const newProduct = await manager.addProduct(product)
+
+    const products = await manager.getProducts()
+
+    const io = req.app.get("io")
+
+    io.emit("updateProducts", products)
+
+    res.status(201).json(newProduct)
+
+  } catch (error){
+
+    res.status(500).json({error:"Error al crear producto"})
+
+  }
 });
 
 router.put("/:pid", async (req, res) => {
@@ -39,15 +64,25 @@ router.put("/:pid", async (req, res) => {
 });
 
 router.delete("/:pid", async (req, res) => {
-  const id = parseInt(req.params.pid);
+  try {
 
-  const deleted = await manager.deleteProduct(id);
+    const { pid } = req.params
 
-  if (!deleted) {
-    return res.status(404).json({ error: "Producto no encontrado" });
+    await manager.deleteProduct(pid)
+
+    const products = await manager.getProducts()
+
+    const io = req.app.get("io")
+
+    io.emit("updateProducts", products)
+
+    res.json({message:"Producto eliminado"})
+
+  } catch (error){
+
+    res.status(500).json({error:"Error al eliminar producto"})
+
   }
-
-  res.json({ message: "Producto eliminado" });
 });
 
 module.exports = router;

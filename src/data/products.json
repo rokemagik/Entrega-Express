@@ -9,5 +9,38 @@
     "stock": 15,
     "category": "perifericos",
     "thumbnails": []
+  },
+  {
+    "id": 3,
+    "title": "Mouse Gamer",
+    "description": "Mouse RGB",
+    "code": "M01",
+    "price": 12000,
+    "status": true,
+    "stock": 15,
+    "category": "perifericos",
+    "thumbnails": []
+  },
+  {
+    "id": 4,
+    "title": "Monitor LG 180hz",
+    "description": "Monitor 24 180hz",
+    "code": "MLG1",
+    "price": 455000,
+    "status": true,
+    "stock": 18,
+    "category": "perifericos",
+    "thumbnails": []
+  },
+  {
+    "id": 5,
+    "title": "Auriculares",
+    "description": "Auriculares Gamer",
+    "code": "A01",
+    "price": 35000,
+    "status": true,
+    "stock": 20,
+    "category": "perifericos",
+    "thumbnails": []
   }
 ]

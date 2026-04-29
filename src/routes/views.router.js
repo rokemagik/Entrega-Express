@@ -1,25 +1,40 @@
-const { Router } = require("express")
-const ProductManager = require("../managers/ProductManager")
+const { Router } = require("express");
+const ProductModel = require("../models/Product");
+const CartModel = require("../models/Cart");
 
-const router = Router()
+const router = Router();
 
-const manager = new ProductManager("./src/data/products.json")
+router.get("/", (req, res) => {
+  res.render("home");
+});
 
-router.get("/", async (req,res)=>{
+router.get("/products", async (req, res) => {
+  try {
+    const products = await ProductModel.find().lean();
 
-    const products = await manager.getProducts()
+    res.render("products", { products });
+  } catch (error) {
+    res.status(500).send("Error al cargar productos");
+  }
+});
 
-    res.render("home",{products})
+router.get("/carts/:cid", async (req, res) => {
+  try {
+    const { cid } = req.params;
 
-})
+    const cart = await CartModel.findById(cid)
+      .populate("products.product")
+      .lean();
+
+    if (!cart) {
+      return res.status(404).send("Carrito no encontrado");
+    }
+
+    res.render("cart", { cart });
+  } catch (error) {
+    res.status(500).send("Error al cargar carrito");
+  }
+});
 
 
-router.get("/realtimeproducts", async (req,res)=>{
-
-    const products = await manager.getProducts()
-
-    res.render("realTimeProducts",{products})
-
-})
-
-module.exports = router
+module.exports = router;

@@ -1,0 +1,35 @@
+<h1>Productos</h1>
+
+<a href="/carts/69f240606eff9ee25e59ecad">
+  🛒 Ver carrito
+</a>
+
+<hr>
+
+{{#each products}}
+  <div style="margin-bottom:20px;">
+    <h3>{{this.title}}</h3>
+    <p>Precio: ${{this.price}}</p>
+
+    <button onclick="addToCart('{{this._id}}')">
+      Agregar al carrito
+    </button>
+  </div>
+{{/each}}
+
+<script>
+  // ID real de carrito
+  const cartId = "69f240606eff9ee25e59ecad";
+
+  function addToCart(pid) {
+    fetch(`/api/carts/${cartId}/products/${pid}`, {
+      method: "POST"
+    })
+    .then(res => res.json())
+    .then(data => {
+      console.log("Producto agregado:", data);
+      alert("Producto agregado al carrito 🛒");
+    })
+    .catch(err => console.error(err));
+  }
+</script>

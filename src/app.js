@@ -9,6 +9,12 @@ const viewsRouter = require("./routes/views.router")
 
 const app = express()
 
+const mongoose = require("mongoose")
+
+mongoose.connect("mongodb+srv://Emi:emi123456@cluster0.d1txvpu.mongodb.net/ecommerce")
+  .then(()=> console.log("Mongo conectado"))
+  .catch(err => console.log(err))
+
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
 
